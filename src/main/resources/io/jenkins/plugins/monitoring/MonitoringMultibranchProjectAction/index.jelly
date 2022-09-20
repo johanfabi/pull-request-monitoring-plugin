@@ -1,0 +1,95 @@
+<?jelly escape-by-default='true'?>
+
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+
+    <l:layout title="Pull Request Monitoring">
+
+        <link href="${resURL}/plugin/pull-request-monitoring/css/pull-request-monitoring.css" rel="stylesheet"/>
+
+        <l:side-panel>
+
+            <st:include page="sidepanel.jelly" it="${it.project}" optional="true" />
+
+        </l:side-panel>
+
+        <l:main-panel>
+
+            <st:adjunct includes="io.jenkins.plugins.bootstrap5"/>
+
+            <div class="fluid-container">
+
+                <h1>
+                   ${%title}
+                </h1>
+
+                <div class="row">
+
+                    <j:if test="${it.pullRequests.size() == 0}">
+
+                        <div class="col-12 center">
+
+                            <p>${%noPullRequest}</p>
+
+                        </div>
+
+                    </j:if>
+
+                    <j:forEach var="job" items="${it.pullRequests}">
+
+                        <div class="col-6 pt-4">
+
+                            <div class="card text-center">
+
+                                <div class="card-header">
+
+                                    ${job.getDisplayName()}
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <j:set var="objectMetadata" value="${it.getObjectMetaData(job)}"/>
+                                    <j:set var="contributorMetadata" value="${it.getContributorMetaData(job)}"/>
+
+                                    <h5 class="card-title">
+                                        ${objectMetadata.isPresent() ? objectMetadata.get().getObjectDisplayName() : 'unknown'}
+                                    </h5>
+
+                                    <p class="card-text">
+
+                                        <strong>${%contributor}:</strong> ${contributorMetadata.isPresent() ?
+                                        contributorMetadata.get().getContributor() : 'unknown'} <br/>
+
+                                        <strong>${%source}:</strong> ${it.getScmHead(job).getOriginName()} <br/>
+
+                                        <strong>${%target}:</strong> ${it.getScmHead(job).getTarget().getName()}
+
+                                    </p>
+
+                                    <div class="row border-top"/>
+
+                                    <button onclick="location.href='${rootURL}/${job.getLastBuild().getUrl()}${it.getUrlName()}'"
+                                            type="button" class="btn btn-outline-primary">${%dashboard}</button>
+
+                                    <button onclick="location.href='${objectMetadata.isPresent() ? objectMetadata.get().getObjectUrl() : '#'}'"
+                                            type="button" class="btn btn-outline-success">
+                                        ${%goToPullRequest}
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </j:forEach>
+
+                </div>
+
+            </div>
+
+        </l:main-panel>
+
+    </l:layout>
+
+</j:jelly>

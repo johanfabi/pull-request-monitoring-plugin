@@ -1,0 +1,126 @@
+<?jelly escape-by-default='true'?>
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+
+    <st:documentation>
+        The configuration modal.
+    </st:documentation>
+
+    <st:header name="Content-Type" value="text/html;charset=UTF-8"/>
+
+    <link rel="stylesheet" href="${resURL}/plugin/pull-request-monitoring/css/jsontree.css"/>
+
+    <div class="modal right fade" id="configModal" tabindex="-1" aria-labelledby="configModalLabel">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="configModalLabel">
+
+                        <img src="${resURL}/plugin/pull-request-monitoring/icons/JCasC.svg" width="15%" height="15%"/>
+                        ${%configModal.title}
+
+                    </h4>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <h6>${%configModal.changes}</h6>
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <p>${it.hasChanges()}</p>
+
+                        </div>
+
+                    </div>
+
+                    <h6>${%configModal.source}</h6>
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <p id="sourceDescription"/>
+
+                        </div>
+
+                    </div>
+
+
+                    <h6>${%configModal.synchronized}</h6>
+
+                    <div class="row">
+
+                        <div class="col-10">
+
+                            <p id="resetDescription"/>
+
+                        </div>
+
+                        <div class="col-2">
+
+                            <button id="reset" type="button" class="btn btn-light float-right">
+                                <l:svgIcon class="icon-small" tooltip="${%configModal.reset}"
+                                           ariaHidden="true"
+                                           href="${resURL}/images/material-icons/svg-sprite-content-symbol.svg#ic_undo_24px"/>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <h6>${%configModal.actual}</h6>
+
+                    <div class="row">
+
+                        <div class="col-10">
+
+                            <pre id="config"/>
+
+                        </div>
+
+                        <div class="col-2">
+
+                            <button id="copy" type="button" class="btn btn-light float-right"
+                                    data-toggle="tooltip" data-placement="bottom" title="Copy to clipboard">
+                                <l:svgIcon class="icon-small" tooltip="${%configModal.copy}"
+                                           ariaHidden="true"
+                                           href="${resURL}/images/material-icons/svg-sprite-content-symbol.svg#ic_content_paste_24px"/>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <h6>${%configModal.default}</h6>
+
+                    <div class="row">
+
+                        <div class="col-10">
+
+                            <pre id="defaultConfig"/>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="${resURL}/plugin/pull-request-monitoring/js/jsontree.js"/>
+
+</j:jelly>
